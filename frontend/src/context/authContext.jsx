@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   // Simulate user authentication state persistence (e.g., check localStorage)
   useEffect(() => {
     const savedToken = localStorage.getItem("authToken");
-    const user = localStorage.getItem("user");
+    const user = JSON.parse(localStorage.getItem("user"));
     if (savedToken) {
       // If token exists, simulate fetching user data
       setToken(savedToken);
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (user, token) => {
     // Mock API call
     localStorage.setItem("authToken", token); // Save token to localStorage
-    localStorage.setItem("user", user);
+    localStorage.setItem("user", JSON.stringify(user));
     setToken(token);
     setUser(user); // Mock user data
   };

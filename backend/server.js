@@ -18,6 +18,13 @@ app.post("/login", authController.login); // Login User
 
 // Example protected route
 app.get("/getusers", authenticateJWT, isAdmin, authController.getUsers);
+app.delete(
+  "/deleteuser/:id",
+  authenticateJWT,
+  isAdmin,
+  authController.deleteuser
+);
+app.put("/edituser", authenticateJWT, authController.edituser);
 
 // Start Server
 app.listen(PORT, () => {

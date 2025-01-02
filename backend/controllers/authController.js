@@ -91,3 +91,39 @@ exports.getUsers = (req, res) => {
     });
   });
 };
+
+exports.deleteuser = (req, res) => {
+  const userId = req.params.id;
+  db.query("DELETE FROM users WHERE id = ?", [userId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Server error" });
+    }
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "User deleted successfully" });
+  });
+};
+
+exports.edituser = (req, res) => {
+  const userId = req.user.userId;
+  const { name, email } = req.body;
+  console.log(userId, name, email);
+
+  db.query(
+    "UPDATE users SET name = ?, email = ? WHERE id = ?",
+    [name, email, userId],
+    (err, results) => {
+      if (err) {
+        return res.status(500).json({ message: "Server error" });
+      }
+      if (results.affectedRows === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.status(200).json({
+        message: "User updated successfully",
+        user: { id: userId, name, email },
+      });
+    }
+  );
+};

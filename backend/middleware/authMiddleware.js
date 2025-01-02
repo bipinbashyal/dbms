@@ -13,6 +13,7 @@ const authenticateJWT = (req, res, next) => {
     }
 
     req.user = decoded; // Save decoded user info to request
+    console.log(req.user);
     next();
   });
 };
